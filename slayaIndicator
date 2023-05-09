@@ -184,10 +184,10 @@ off = percWidth(300, offsetSignal)
 barcolor(up > dn ? white : blue)
 plotshape(showBuySell and bull ? low  - off : na, "Buy Label" , shape.labelup  , location.absolute, color(#00ff0a), 0, "Buy" , color.white, size=size.tiny)
 plotshape(showBuySell and bear ? high + off : na, "Sell Label", shape.labeldown, location.absolute, color(#ff0015), 0, "Sell", color.white, size=size.tiny)
-plotshape(ta.crossover(wt1, wt2) and wt2 <= -53, "Don't Sell/Bottom" , shape.xcross, location.belowbar, color(#ff0015), size=size.tiny)
-plotshape(ta.crossunder(wt1, wt2) and wt2 >= 53, "Don't Buy/Top", shape.xcross, location.abovebar, color(#00ff0a), size=size.tiny)
-plotshape(wtDivBull, "Weak Buy ", shape.circle  , location.belowbar, color(#00ff0a), size=size.auto)
-plotshape(wtDivBear, "Weak Sell", shape.circle, location.abovebar, color(#ff0015), size=size.auto)
+plotshape(ta.crossover(wt1, wt2) and wt2 <= -53, "Don't Sell/Bottom" , shape.xcross, location.belowbar, color(#ff0015),0, "Don't Sell" , color.white, size=size.tiny)
+plotshape(ta.crossunder(wt1, wt2) and wt2 >= 53, "Don't Buy/Top", shape.xcross, location.abovebar, color(#00ff0a),0, "Don't Buy" , color.white, size=size.tiny)
+plotshape(wtDivBull, "Weak Buy ", shape.circle  , location.belowbar, color(#00ff0a), 0, "Weak Buy" , color.white,size=size.auto)
+plotshape(wtDivBear, "Weak Sell", shape.circle, location.abovebar, color(#ff0015),0, "Weak Sell" , color.white, size=size.auto)
 plotshape(showReversal and rsiOs, "Reversal Buy" , shape.diamond, location.belowbar, color(#00ff0a), size=size.tiny)
 plotshape(showReversal and rsiOb, "Reversal Sell", shape.diamond, location.abovebar, color(#ff0015), size=size.tiny)
 
@@ -527,6 +527,8 @@ if barstate.islast and showDashboard
     dashboard_cell(1, 12, TF240Bull ? "Bullish" : "Bearish", true), dashboard_cell_bg(1, 12, TF240Bull ? #00ff0a : #ff0015)
     dashboard_cell(1, 13, TF480Bull ? "Bullish" : "Bearish", true), dashboard_cell_bg(1, 13, TF480Bull ? #00ff0a : #ff0015)
     dashboard_cell(1, 14, TFDBull   ? "Bullish" : "Bearish", true), dashboard_cell_bg(1, 14, TFDBull   ? #00ff0a : #ff0015)
+
+
 
 // Previos Day H/L/C
 lStyle = lineStyle == "Solid" ? line.style_solid : lineStyle == "Dotted" ? line.style_dotted : line.style_dashed
