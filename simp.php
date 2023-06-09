@@ -62,7 +62,7 @@
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         Please Select the Date: 
           <input type="date" name="start_date">
-			<input type="date" name="end_date">
+		  <input type="date" name="end_date">
         <input type="submit">
     </form>
 </div>
@@ -84,6 +84,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $arrivalDate = $_POST["start_date"];
+		$endDate = $_POST["end_date"];
 
         $queryReport = "
         SELECT
@@ -93,7 +94,7 @@
  CASE INSTR(JRNLS.JOURNALTEXT, 'Room Charge ')
   WHEN 0 THEN TO_CHAR(TMNAME.STRINGTEXT)
   ELSE 'ROOM CHARGE : ' || TRIM(SUBSTR(TO_CHAR(JRNLS.JOURNALTEXT), INSTR(JRNLS.JOURNALTEXT, 'Room Charge ', -1, 1) + 40, 30))
- END 'ROOM / PAYMENT',
+ END ROOMPAYMENT,
  TBLNAMES.STRINGTEXT TABLENAME,
  HUNITNAMES.STRINGTEXT REVCTR,
  MST.OBJECTNUMBER MENUITEMNUMBER,
@@ -220,8 +221,8 @@ LEFT JOIN DBCREATE.TENDER_MEDIA TM ON TM.OBJECTNUMBER = TMFINDER.OBJECTNUMBER
 LEFT JOIN DBCREATE.STRING_TABLE TMNAME ON TM.NAMEID = TMNAME.STRINGNUMBERID
 WHERE DETAIL.DETAILTYPE = 1 AND 
   DETAIL.VOIDLINK IS NULL AND
-  TRUNC(BDATE.BUSINESSDATE) >= TO_DATE(:start_date, 'YYYY-MM-DD') AND 
-  TRUNC(BDATE.BUSINESSDATE) <= TO_DATE(:start_date, 'YYYY-MM-DD') AND 
+  TRUNC(BDATE.BUSINESSDATE) >= TO_DATE(:arrivalDate, 'YYYY-MM-DD') AND 
+  TRUNC(BDATE.BUSINESSDATE) <= TO_DATE(:endDate, 'YYYY-MM-DD') AND 
   CHECKS.ADDEDTOCHECKNUM IS NULL AND 
   CHECKS.REOPENEDTOCHECKNUM IS NULL AND 
   CHECKS.CHECKCLOSE IS NOT NULL
@@ -229,7 +230,7 @@ WHERE DETAIL.DETAILTYPE = 1 AND
 
         
 
-        displayTable($conn, $queryReport, $arrivalDate, "Report");
+        displayTable($conn, $queryReport, $arrivalDate,$endDate, "Report");
     }
 
     oci_close($conn);
@@ -237,6 +238,7 @@ WHERE DETAIL.DETAILTYPE = 1 AND
     function displayTable($conn, $query, $date, $title) {
         $stid = oci_parse($conn, $query);
         oci_bind_by_name($stid, ":arrivalDate", $date);
+		oci_bind_by_name($stid, ":endDate", $date);
         oci_execute($stid);
 
         echo '<div class="section-title">' . $title . '</div>';
