@@ -1,0 +1,213 @@
+Plan hash value: 1523875692
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------------
+| Id  | Operation                                               | Name                          | Rows  | Bytes |TempSpc| Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT                                        |                               |  2360 |  3510K|       |  2019K  (1)| 00:01:19 |
+|*  1 |  HASH JOIN RIGHT OUTER                                  |                               |  2360 |  3510K|       |  2019K  (1)| 00:01:19 |
+|   2 |   TABLE ACCESS FULL                                     | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|*  3 |   HASH JOIN RIGHT OUTER                                 |                               |  2360 |  3454K|       |  2019K  (1)| 00:01:19 |
+|   4 |    TABLE ACCESS FULL                                    | FAMILY_GROUP                  |   166 |  1992 |       |     2   (0)| 00:00:01 |
+|*  5 |    HASH JOIN RIGHT OUTER                                |                               |  2360 |  3427K|       |  2019K  (1)| 00:01:19 |
+|   6 |     TABLE ACCESS FULL                                   | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|*  7 |     HASH JOIN RIGHT OUTER                               |                               |  2360 |  3371K|       |  2019K  (1)| 00:01:19 |
+|   8 |      TABLE ACCESS FULL                                  | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|*  9 |      HASH JOIN RIGHT OUTER                              |                               |  2360 |  3316K|       |  2019K  (1)| 00:01:19 |
+|  10 |       TABLE ACCESS FULL                                 | MAJOR_GROUP                   |    23 |   253 |       |     2   (0)| 00:00:01 |
+|* 11 |       HASH JOIN RIGHT OUTER                             |                               |  2360 |  3291K|       |  2019K  (1)| 00:01:19 |
+|  12 |        TABLE ACCESS FULL                                | MENU_ITEM_MASTER              |  3392 | 74624 |       |     6   (0)| 00:00:01 |
+|* 13 |        HASH JOIN OUTER                                  |                               |  2360 |  3240K|  3152K|  2019K  (1)| 00:01:19 |
+|  14 |         JOIN FILTER CREATE                              | :BF0000                       |  2360 |  3120K|       |  9159   (1)| 00:00:01 |
+|* 15 |          HASH JOIN RIGHT OUTER                          |                               |  2360 |  3120K|       |  9159   (1)| 00:00:01 |
+|  16 |           TABLE ACCESS FULL                             | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|  17 |           NESTED LOOPS OUTER                            |                               |  2360 |  3065K|       |  9118   (1)| 00:00:01 |
+|* 18 |            HASH JOIN RIGHT OUTER                        |                               |  2360 |  3012K|       |  9118   (1)| 00:00:01 |
+|  19 |             TABLE ACCESS FULL                           | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|* 20 |             HASH JOIN RIGHT OUTER                       |                               |  2360 |  2956K|       |  9076   (1)| 00:00:01 |
+|  21 |              TABLE ACCESS FULL                          | TENDER_MEDIA                  |    30 |   270 |       |     2   (0)| 00:00:01 |
+|* 22 |              HASH JOIN RIGHT OUTER                      |                               |  2360 |  2936K|       |  9074   (1)| 00:00:01 |
+|* 23 |               TABLE ACCESS FULL                         | CHECK_DETAIL                  |  6419 | 96285 |       |   488   (2)| 00:00:01 |
+|* 24 |               HASH JOIN RIGHT OUTER                     |                               |  1855 |  2280K|       |  8586   (1)| 00:00:01 |
+|  25 |                VIEW                                     |                               |    13 |  2379 |       |  4896   (1)| 00:00:01 |
+|  26 |                 NESTED LOOPS OUTER                      |                               |    13 |  2626 |       |  4896   (1)| 00:00:01 |
+|* 27 |                  HASH JOIN OUTER                        |                               |     1 |   160 |       |  4886   (1)| 00:00:01 |
+|  28 |                   NESTED LOOPS OUTER                    |                               |     1 |   125 |       |  1481   (2)| 00:00:01 |
+|  29 |                    NESTED LOOPS OUTER                   |                               |     1 |   101 |       |  1479   (2)| 00:00:01 |
+|  30 |                     NESTED LOOPS OUTER                  |                               |     1 |    83 |       |  1478   (2)| 00:00:01 |
+|* 31 |                      FILTER                             |                               |       |       |       |            |          |
+|* 32 |                       HASH JOIN OUTER                   |                               |     1 |    71 |       |  1476   (2)| 00:00:01 |
+|* 33 |                        FILTER                           |                               |       |       |       |            |          |
+|* 34 |                         HASH JOIN OUTER                 |                               |   145 |  7540 |       |   989   (2)| 00:00:01 |
+|* 35 |                          HASH JOIN OUTER                |                               | 14505 |   439K|       |   501   (1)| 00:00:01 |
+|  36 |                           TABLE ACCESS FULL             | DISCOUNT_ALLOC_DETAIL         | 14505 |   269K|       |    14   (0)| 00:00:01 |
+|  37 |                           TABLE ACCESS FULL             | CHECK_DETAIL                  |   117K|  1377K|       |   485   (1)| 00:00:01 |
+|* 38 |                          TABLE ACCESS FULL              | CHECK_DETAIL                  | 65843 |  1350K|       |   488   (2)| 00:00:01 |
+|* 39 |                        TABLE ACCESS FULL                | CHECK_DETAIL                  |  3271 | 62149 |       |   486   (1)| 00:00:01 |
+|  40 |                      TABLE ACCESS BY INDEX ROWID BATCHED| DISCOUNT                      |     1 |    12 |       |     2   (0)| 00:00:01 |
+|* 41 |                       INDEX RANGE SCAN                  | AK_DISCOUNT                   |     1 |       |       |     1   (0)| 00:00:01 |
+|  42 |                     TABLE ACCESS BY INDEX ROWID         | CHECKS                        |     1 |    18 |       |     1   (0)| 00:00:01 |
+|* 43 |                      INDEX UNIQUE SCAN                  | PK_CHECK                      |     1 |       |       |     0   (0)| 00:00:01 |
+|  44 |                    TABLE ACCESS BY INDEX ROWID BATCHED  | STRING_TABLE                  |     1 |    24 |       |     2   (0)| 00:00:01 |
+|* 45 |                     INDEX RANGE SCAN                    | AK_STRING_TABLE               |     1 |       |       |     1   (0)| 00:00:01 |
+|  46 |                   VIEW                                  |                               | 62082 |  2121K|       |  3405   (1)| 00:00:01 |
+|  47 |                    SORT UNIQUE                          |                               | 62082 |    15M|    32M|  3405   (1)| 00:00:01 |
+|  48 |                     UNION-ALL                           |                               |       |       |       |            |          |
+|  49 |                      TABLE ACCESS FULL                  | GUEST_CHECK                   |   183 | 54717 |       |     5   (0)| 00:00:01 |
+|  50 |                      TABLE ACCESS FULL                  | GUEST_CHECK_HIST              | 61899 |    15M|       |   419   (4)| 00:00:01 |
+|* 51 |                  VIEW                                   |                               |     1 |    42 |       |    10  (20)| 00:00:01 |
+|  52 |                   SORT UNIQUE                           |                               |    31 |  8705 |       |    10  (20)| 00:00:01 |
+|  53 |                    UNION ALL PUSHED PREDICATE           |                               |       |       |       |            |          |
+|  54 |                     TABLE ACCESS BY INDEX ROWID BATCHED | GUEST_CHECK_LINE_ITEM         |    15 |  4305 |       |     3   (0)| 00:00:01 |
+|* 55 |                      INDEX RANGE SCAN                   | XN4GUEST_CHECK_LINE_ITEM      |    15 |       |       |     1   (0)| 00:00:01 |
+|  56 |                     TABLE ACCESS BY INDEX ROWID BATCHED | GUEST_CHECK_LINE_ITEM_HIST    |    16 |  4400 |       |     5   (0)| 00:00:01 |
+|* 57 |                      INDEX RANGE SCAN                   | XN4GUEST_CHECK_LINE_ITEM_HIST |    16 |       |       |     3   (0)| 00:00:01 |
+|* 58 |                HASH JOIN                                |                               |  1855 |  1949K|       |  3690   (1)| 00:00:01 |
+|* 59 |                 HASH JOIN OUTER                         |                               |   237 |   241K|       |  3201   (1)| 00:00:01 |
+|* 60 |                  HASH JOIN OUTER                        |                               |   237 |   236K|       |  3160   (1)| 00:00:01 |
+|* 61 |                   HASH JOIN RIGHT OUTER                 |                               |   237 |   230K|       |  3118   (1)| 00:00:01 |
+|  62 |                    TABLE ACCESS FULL                    | DINING_TABLE                  |  2034 | 18306 |       |     4   (0)| 00:00:01 |
+|* 63 |                    HASH JOIN RIGHT OUTER                |                               |   237 |   228K|       |  3114   (1)| 00:00:01 |
+|  64 |                     TABLE ACCESS FULL                   | PERIOD                        |    86 |   602 |       |     3   (0)| 00:00:01 |
+|* 65 |                     HASH JOIN RIGHT OUTER               |                               |   237 |   226K|       |  3111   (1)| 00:00:01 |
+|  66 |                      TABLE ACCESS FULL                  | SERVING_PERIOD                |    53 |   424 |       |     2   (0)| 00:00:01 |
+|  67 |                      NESTED LOOPS OUTER                 |                               |   237 |   224K|       |  3109   (1)| 00:00:01 |
+|* 68 |                       HASH JOIN RIGHT OUTER             |                               |   237 | 31995 |       |  2872   (1)| 00:00:01 |
+|  69 |                        VIEW                             |                               |    11 |   286 |       |  2651   (1)| 00:00:01 |
+|  70 |                         HASH GROUP BY                   |                               |    11 |   132 |       |  2651   (1)| 00:00:01 |
+|* 71 |                          TABLE ACCESS FULL              | POS_JOURNAL_LOG               |    11 |   132 |       |  2650   (1)| 00:00:01 |
+|* 72 |                        HASH JOIN                        |                               |   237 | 25833 |       |   221   (2)| 00:00:01 |
+|* 73 |                         HASH JOIN                       |                               |    28 |  1344 |       |    65   (4)| 00:00:01 |
+|* 74 |                          HASH JOIN                      |                               |    29 |   464 |       |     5   (0)| 00:00:01 |
+|* 75 |                           TABLE ACCESS FULL             | HIERARCHY_UNIT                |    29 |   290 |       |     3   (0)| 00:00:01 |
+|  76 |                           VIEW                          | index$_join$_049              |    31 |   186 |       |     2   (0)| 00:00:01 |
+|* 77 |                            HASH JOIN                    |                               |       |       |       |            |          |
+|  78 |                             INDEX FAST FULL SCAN        | IX_HIERSTRUCT_2001            |    31 |   186 |       |     1   (0)| 00:00:01 |
+|  79 |                             INDEX FAST FULL SCAN        | IX_HIERSTRUCT_ORG             |    31 |   186 |       |     1   (0)| 00:00:01 |
+|* 80 |                          TABLE ACCESS FULL              | PERIOD_INSTANCE               |    30 |   960 |       |    60   (4)| 00:00:01 |
+|* 81 |                         TABLE ACCESS FULL               | CHECKS                        |  6914 |   411K|       |   155   (1)| 00:00:01 |
+|  82 |                       TABLE ACCESS BY INDEX ROWID       | POS_JOURNAL_LOG               |     1 |   837 |       |     1   (0)| 00:00:01 |
+|* 83 |                        INDEX UNIQUE SCAN                | PK_POS_JOURNAL_LOG            |     1 |       |       |     0   (0)| 00:00:01 |
+|  84 |                   TABLE ACCESS FULL                     | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|  85 |                  TABLE ACCESS FULL                      | STRING_TABLE                  | 34043 |   797K|       |    41   (3)| 00:00:01 |
+|* 86 |                 TABLE ACCESS FULL                       | CHECK_DETAIL                  | 64373 |  2011K|       |   489   (2)| 00:00:01 |
+|  87 |            TABLE ACCESS BY INDEX ROWID                  | EMPLOYEE                      |     1 |    23 |       |     0   (0)| 00:00:01 |
+|* 88 |             INDEX UNIQUE SCAN                           | XPKEMPLOYEE                   |     1 |       |       |     0   (0)| 00:00:01 |
+|  89 |         VIEW                                            |                               | 65843 |  3343K|       |  2009K  (1)| 00:01:19 |
+|  90 |          HASH GROUP BY                                  |                               | 65843 |  9130K|    28M|  2009K  (1)| 00:01:19 |
+|  91 |           JOIN FILTER USE                               | :BF0000                       |   199K|    27M|       |  2007K  (1)| 00:01:19 |
+|  92 |            NESTED LOOPS OUTER                           |                               |   199K|    27M|       |  2007K  (1)| 00:01:19 |
+|  93 |             NESTED LOOPS OUTER                          |                               |   199K|    24M|       |  1200K  (1)| 00:00:47 |
+|  94 |              NESTED LOOPS OUTER                         |                               |   199K|    22M|       |   800K  (1)| 00:00:32 |
+|  95 |               NESTED LOOPS OUTER                        |                               |   199K|    19M|       |   400K  (1)| 00:00:16 |
+|  96 |                NESTED LOOPS OUTER                       |                               |   199K|    17M|       |   200K  (1)| 00:00:08 |
+|* 97 |                 HASH JOIN RIGHT OUTER                   |                               |   199K|    14M|       |   553   (3)| 00:00:01 |
+|  98 |                  TABLE ACCESS FULL                      | HIERARCHY_STRUCTURE           |    31 |   186 |       |     3   (0)| 00:00:01 |
+|* 99 |                  HASH JOIN RIGHT OUTER                  |                               |   199K|    13M|       |   549   (3)| 00:00:01 |
+| 100 |                   TABLE ACCESS FULL                     | HIERARCHY_STRUCTURE           |    31 |   186 |       |     3   (0)| 00:00:01 |
+|*101 |                   HASH JOIN RIGHT OUTER                 |                               |   199K|    12M|       |   544   (3)| 00:00:01 |
+| 102 |                    TABLE ACCESS FULL                    | MENU_ITEM_DEFINITION          | 10910 |   181K|       |    40   (3)| 00:00:01 |
+|*103 |                    FILTER                               |                               |       |       |       |            |          |
+|*104 |                     HASH JOIN RIGHT OUTER               |                               | 61960 |  2904K|       |   502   (2)| 00:00:01 |
+| 105 |                      TABLE ACCESS FULL                  | HIERARCHY_STRUCTURE           |    31 |   186 |       |     3   (0)| 00:00:01 |
+|*106 |                      HASH JOIN RIGHT OUTER              |                               | 65843 |  2700K|       |   499   (2)| 00:00:01 |
+| 107 |                       TABLE ACCESS FULL                 | HIERARCHY_STRUCTURE           |    31 |   186 |       |     3   (0)| 00:00:01 |
+|*108 |                       HASH JOIN RIGHT OUTER             |                               | 65843 |  2314K|       |   495   (2)| 00:00:01 |
+| 109 |                        TABLE ACCESS FULL                | MENU_ITEM_MASTER              |  3392 | 71232 |       |     6   (0)| 00:00:01 |
+|*110 |                        TABLE ACCESS FULL                | CHECK_DETAIL                  | 65843 |   964K|       |   488   (2)| 00:00:01 |
+| 111 |                 VIEW                                    | VW_LAT_6B76C501               |     1 |    13 |       |     1   (0)| 00:00:01 |
+|*112 |                  INDEX FULL SCAN                        | AK_MAJOR_GROUP                |     1 |    14 |       |     1   (0)| 00:00:01 |
+| 113 |                VIEW                                     | VW_LAT_6B76C501               |     1 |    13 |       |     1   (0)| 00:00:01 |
+|*114 |                 INDEX FULL SCAN                         | AK_FAMILY_GROUP               |     1 |    15 |       |     1   (0)| 00:00:01 |
+| 115 |               VIEW                                      | VW_LAT_6B76C501               |     1 |    13 |       |     2   (0)| 00:00:01 |
+|*116 |                FILTER                                   |                               |       |       |       |            |          |
+|*117 |                 INDEX FAST FULL SCAN                    | AK_MENU_ITEM_CLASS            |     1 |    17 |       |     2   (0)| 00:00:01 |
+| 118 |              VIEW                                       | VW_LAT_6B76C501               |     1 |    13 |       |     2   (0)| 00:00:01 |
+|*119 |               FILTER                                    |                               |       |       |       |            |          |
+|*120 |                TABLE ACCESS FULL                        | PRINT_CLASS                   |     1 |    11 |       |     2   (0)| 00:00:01 |
+| 121 |             VIEW                                        | VW_LAT_6B76C501               |     1 |    13 |       |     4   (0)| 00:00:01 |
+|*122 |              FILTER                                     |                               |       |       |       |            |          |
+|*123 |               TABLE ACCESS FULL                         | SCREEN_LOOKUP                 |     1 |    20 |       |     4   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+Predicate Information (identified by operation id):
+---------------------------------------------------
+ 
+   1 - access("FG"."NAMEID"="FGNAMES"."STRINGNUMBERID"(+))
+   3 - access("FG"."OBJECTNUMBER"(+)="MST"."FAMGRPOBJNUM" AND "FG"."HIERSTRUCID"(+)="LOCATIONS"."FG_HIERSTRUCID")
+   5 - access("MG"."NAMEID"="MGNAMES"."STRINGNUMBERID"(+))
+   7 - access("MST"."NAMEID"="MSTNAMES"."STRINGNUMBERID"(+))
+   9 - access("MG"."OBJECTNUMBER"(+)="MST"."MAJGRPOBJNUM" AND "MG"."HIERSTRUCID"(+)="LOCATIONS"."MG_HIERSTRUCID")
+  11 - access("MST"."OBJECTNUMBER"(+)="DETAIL"."OBJECTNUMBER" AND "MST"."HIERSTRUCID"(+)="LOCATIONS"."MST_HSTRUC")
+  13 - access("LOCATIONS"."CHECKDETAILID"(+)="DETAIL"."CHECKDETAILID")
+  15 - access("SPNAMES"."STRINGNUMBERID"(+)="P"."NAMEID")
+  18 - access("TM"."NAMEID"="TMNAME"."STRINGNUMBERID"(+))
+  20 - access("TM"."OBJECTNUMBER"(+)="TMFINDER"."OBJECTNUMBER")
+  22 - access("TMFINDER"."CHECKID"(+)="CHECKS"."CHECKID")
+  23 - filter("TMFINDER"."DETAILTYPE"(+)=4 AND "TMFINDER"."VOIDLINK"(+) IS NULL)
+  24 - access("DISCOUNTS"."CHECKDETAILID"(+)="DETAIL"."CHECKDETAILID")
+  27 - access("CHECKS"."CHECKNUMBER"="LOC_CHECKS"."CHECKNUM"(+) AND TO_CHAR(INTERNAL_FUNCTION("CHECKS"."CHECKOPEN")+.25,'DD-MON-YY 
+              HH24:MI')=TO_CHAR(INTERNAL_FUNCTION("LOC_CHECKS"."OPENDATETIME"(+)),'DD-MON-YY HH24:MI'))
+  31 - filter("DSCDTL"."VOIDLINK" IS NULL)
+  32 - access("FINDER"."CHECKID"="DSCDTL"."CHECKID"(+) AND "DSCDTL"."DETAILLINK"(+)="ALLOC"."DSCNTDETAILLINK")
+  33 - filter("DISCOUNTEDITEMDTL"."VOIDLINK" IS NULL)
+  34 - access("DISCOUNTEDITEMDTL"."CHECKID"(+)="FINDER"."CHECKID" AND "DISCOUNTEDITEMDTL"."DETAILLINK"(+)="ALLOC"."ITEMDETAILLINK")
+  35 - access("FINDER"."CHECKDETAILID"(+)="ALLOC"."CHECKDETAILID")
+  38 - filter("DISCOUNTEDITEMDTL"."DETAILTYPE"(+)=1)
+  39 - filter("DSCDTL"."DETAILTYPE"(+)=2)
+  41 - access("DISCOUNT"."HIERSTRUCID"(+)=2 AND "DISCOUNT"."OBJECTNUMBER"(+)="DSCDTL"."OBJECTNUMBER")
+  43 - access("CHECKS"."CHECKID"(+)="FINDER"."CHECKID")
+  45 - access("DSCNAMES"."STRINGNUMBERID"(+)="DISCOUNT"."NAMEID")
+  51 - filter("LOC_DETAIL"."DTLID"(+)="DSCDTL"."DETAILLINK")
+  55 - access("GUEST_CHECK_LINE_ITEM"."GUESTCHECKID"="LOC_CHECKS"."GUESTCHECKID")
+  57 - access("GUEST_CHECK_LINE_ITEM_HIST"."GUESTCHECKID"="LOC_CHECKS"."GUESTCHECKID")
+  58 - access("CHECKS"."CHECKID"="DETAIL"."CHECKID")
+  59 - access("HUNIT"."NAMEID"="HUNITNAMES"."STRINGNUMBERID"(+))
+  60 - access("TBLNAMES"."STRINGNUMBERID"(+)="TBL"."NAMEID")
+  61 - access("TBL"."DININGTABLEID"(+)="CHECKS"."DININGTABLEID")
+  63 - access("SP"."PERIODID"="P"."PERIODID"(+))
+  65 - access("SP"."SERVINGPERIODID"(+)="CHECKS"."SERVINGPERIODID")
+  68 - access("JRNLFINDER"."CHECKNUM"(+)="CHECKS"."CHECKNUMBER")
+  71 - filter("JR"."TYPE"=1)
+  72 - access("HUNIT"."REVCTRID"="CHECKS"."REVCTRID")
+       filter(("BDATE"."ENDTIME">="CHECKS"."CHECKOPEN" OR "BDATE"."LOCALENDTIME" IS NULL) AND "BDATE"."STARTTIME"<="CHECKS"."CHECKOPEN")
+  73 - access("BDATE"."HIERSTRUCID"="HSTRUC"."HIERSTRUCID")
+  74 - access("HSTRUC"."HIERUNITID"="HUNIT"."HIERUNITID")
+  75 - filter("HUNIT"."REVCTRID" IS NOT NULL)
+  77 - access(ROWID=ROWID)
+  80 - filter("BDATE"."BUSINESSDATE" IS NOT NULL AND TRUNC(INTERNAL_FUNCTION("BDATE"."BUSINESSDATE"))>=TO_DATE(' 2023-06-06 00:00:00', 
+              'syyyy-mm-dd hh24:mi:ss') AND TRUNC(INTERNAL_FUNCTION("BDATE"."BUSINESSDATE"))<=TO_DATE(' 2023-06-06 00:00:00', 'syyyy-mm-dd 
+              hh24:mi:ss'))
+  81 - filter("CHECKS"."ADDEDTOCHECKNUM" IS NULL AND "CHECKS"."CHECKCLOSE" IS NOT NULL AND "CHECKS"."REOPENEDTOCHECKNUM" IS NULL)
+  83 - access("JRNLS"."POSJOURNALLOGID"(+)="JRNLFINDER"."JRNLID")
+  86 - filter("DETAIL"."DETAILTYPE"=1 AND "DETAIL"."VOIDLINK" IS NULL)
+  88 - access("EMP"."EMPLOYEEID"(+)="DETAIL"."EMPLOYEEID")
+  97 - access("DEF_STRUC_PARENT"."HIERSTRUCID"(+)="DEF_STRUC"."PARENTHIERSTRUCID")
+  99 - access("DEF_STRUC"."HIERSTRUCID"(+)="DEF"."HIERSTRUCID")
+ 101 - access("DEF"."MENUITEMMASTERID"(+)="MST"."MENUITEMMASTERID")
+ 103 - filter("MST"."HIERSTRUCID"="MST_STRUC"."HIERSTRUCID" OR "MST"."HIERSTRUCID"="MST_STRUC_PARENT"."HIERSTRUCID" OR 
+              "MST"."HIERSTRUCID"="MST_STRUC_PARENT"."PARENTHIERSTRUCID")
+ 104 - access("MST_STRUC_PARENT"."HIERSTRUCID"(+)="MST_STRUC"."PARENTHIERSTRUCID")
+ 106 - access("MST_STRUC"."HIERSTRUCID"(+)="MST"."HIERSTRUCID")
+ 108 - access("MST"."OBJECTNUMBER"(+)="DETAIL"."OBJECTNUMBER")
+ 110 - filter("DETAIL"."DETAILTYPE"=1)
+ 112 - access("MG"."OBJECTNUMBER"="MST"."MAJGRPOBJNUM")
+       filter("MG"."OBJECTNUMBER"="MST"."MAJGRPOBJNUM" AND ("MG"."HIERSTRUCID"="DEF_STRUC_PARENT"."PARENTHIERSTRUCID" OR 
+              "MG"."HIERSTRUCID"="DEF_STRUC"."HIERSTRUCID" OR "MG"."HIERSTRUCID"="DEF_STRUC_PARENT"."HIERSTRUCID"))
+ 114 - access("FG"."OBJECTNUMBER"="MST"."FAMGRPOBJNUM")
+       filter("FG"."OBJECTNUMBER"="MST"."FAMGRPOBJNUM" AND ("FG"."HIERSTRUCID"="DEF_STRUC_PARENT"."PARENTHIERSTRUCID" OR 
+              "FG"."HIERSTRUCID"="DEF_STRUC"."HIERSTRUCID" OR "FG"."HIERSTRUCID"="DEF_STRUC_PARENT"."HIERSTRUCID"))
+ 116 - filter("DEF"."MENUITEMCLASSOBJNUM" IS NOT NULL)
+ 117 - filter("MIC"."OBJECTNUMBER"="DEF"."MENUITEMCLASSOBJNUM" AND ("MIC"."HIERSTRUCID"="DEF_STRUC_PARENT"."PARENTHIERSTRUCID" OR 
+              "MIC"."HIERSTRUCID"="DEF_STRUC"."HIERSTRUCID" OR "MIC"."HIERSTRUCID"="DEF_STRUC_PARENT"."HIERSTRUCID"))
+ 119 - filter("DEF"."PRINTCLASSOBJNUM" IS NOT NULL)
+ 120 - filter("PC"."OBJECTNUMBER"="DEF"."PRINTCLASSOBJNUM" AND ("PC"."HIERSTRUCID"="DEF_STRUC_PARENT"."PARENTHIERSTRUCID" OR 
+              "PC"."HIERSTRUCID"="DEF_STRUC"."HIERSTRUCID" OR "PC"."HIERSTRUCID"="DEF_STRUC_PARENT"."HIERSTRUCID"))
+ 122 - filter("DEF"."SLUINDEX" IS NOT NULL)
+ 123 - filter("SL"."SLUINDEX"="DEF"."SLUINDEX" AND "SL"."SLUTYPE"=6 AND ("SL"."HIERSTRUCID"="DEF_STRUC_PARENT"."PARENTHIERSTRUCID" OR 
+              "SL"."HIERSTRUCID"="DEF_STRUC"."HIERSTRUCID" OR "SL"."HIERSTRUCID"="DEF_STRUC_PARENT"."HIERSTRUCID") AND "DEVICETYPE"=1)
+ 
+Note
+-----
+   - dynamic statistics used: dynamic sampling (level=2)
+   - this is an adaptive plan
+   - 3 Sql Plan Directives used for this statement
