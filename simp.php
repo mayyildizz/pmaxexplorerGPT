@@ -1,17 +1,92 @@
-<?php
-// Connection string
-$db = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.216.33)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=mcrspos)))" ;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB OPERA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-// Connect to Oracle database
-$conn = oci_connect('sa', 'OraS1m$1', $db);
+        .header {
+            background-color: #f1f1f1;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
 
-if (!$conn) {
-    $e = oci_error();
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}
+        .content {
+            margin-top: 100px;
+            padding: 20px;
+        }
 
-// Prepare the query
-$query = "SELECT
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        Please Select the Date: 
+          <input type="date" name="start_date">
+			<input type="date" name="end_date">
+        <input type="submit">
+    </form>
+</div>
+<div class="content">
+    <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+    $dbUser = 'sys';
+    $dbPassword = 'OraS1m$1';
+    $dbConn = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.216.33)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=mcrspos)))';
+
+    $conn = oci_connect($dbUser, $dbPassword, $dbConn, 'AL32UTF8', OCI_SYSDBA);
+    if (!$conn) {
+        $m = oci_error();
+        echo $m['message'], "\n";
+        exit;
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $arrivalDate = $_POST["start_date"];
+
+        $queryReport = "
+        SELECT
  BDATE.BUSINESSDATE,
  CHECKS.CHECKNUMBER,
  CHECKS.ALTERNATEID CHECKNAME,
@@ -145,41 +220,48 @@ LEFT JOIN DBCREATE.TENDER_MEDIA TM ON TM.OBJECTNUMBER = TMFINDER.OBJECTNUMBER
 LEFT JOIN DBCREATE.STRING_TABLE TMNAME ON TM.NAMEID = TMNAME.STRINGNUMBERID
 WHERE DETAIL.DETAILTYPE = 1 AND 
   DETAIL.VOIDLINK IS NULL AND
-  TRUNC(BDATE.BUSINESSDATE) >= TO_DATE(:start_date, 'DD-MM-YYYY') AND 
-  TRUNC(BDATE.BUSINESSDATE) <= TO_DATE(:end_date, 'DD	-MM-YYYY') AND 
+  TRUNC(BDATE.BUSINESSDATE) >= TO_DATE(:start_date, 'YYYY-MM-DD') AND 
+  TRUNC(BDATE.BUSINESSDATE) <= TO_DATE(:start_date, 'YYYY-MM-DD') AND 
   CHECKS.ADDEDTOCHECKNUM IS NULL AND 
   CHECKS.REOPENEDTOCHECKNUM IS NULL AND 
-  CHECKS.CHECKCLOSE IS NOT NULL";
-$stid = oci_parse($conn, $query);
+  CHECKS.CHECKCLOSE IS NOT NULL
+    ";
 
-// Execute the query
-oci_execute($stid);
-?>
+        
 
-<!-- HTML form for date input -->
-<form method="post" action="">
-    Start Date: <input type="date" name="start_date">
-    End Date: <input type="date" name="end_date">
-    <input type="submit" name="submit" value="Execute Query">
-</form>
+        displayTable($conn, $queryReport, $arrivalDate, "Report");
+    }
 
-<!-- Table to display query results -->
-<table border="1">
-    <?php
-    // Fetch the results
-    while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    oci_close($conn);
+
+    function displayTable($conn, $query, $date, $title) {
+        $stid = oci_parse($conn, $query);
+        oci_bind_by_name($stid, ":arrivalDate", $date);
+        oci_execute($stid);
+
+        echo '<div class="section-title">' . $title . '</div>';
+
+        echo "<table>\n";
+        $numColumns = oci_num_fields($stid);
         echo "<tr>\n";
-        foreach ($row as $item) {
-            echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+        for ($i = 1; $i <= $numColumns; ++$i) {
+            $column_name  = oci_field_name($stid, $i);
+            echo "<th>$column_name</th>";
         }
         echo "</tr>\n";
+
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            echo "<tr>\n";
+            foreach ($row as $item) {
+                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+            }
+            echo "</tr>\n";
+        }
+        echo "</table>\n";
+
+        oci_free_statement($stid);
     }
     ?>
-</table>
-
-<?php
-// Free the statement identifier when closing the connection
-oci_free_statement($stid);
-oci_close($conn);
-?>
-
+</div>
+</body>
+</html>
