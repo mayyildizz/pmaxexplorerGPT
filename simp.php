@@ -235,10 +235,10 @@ WHERE DETAIL.DETAILTYPE = 1 AND
 
     oci_close($conn);
 
-    function displayTable($conn, $query, $date, $title) {
+    function displayTable($conn, $query, $date,$enddate, $title) {
         $stid = oci_parse($conn, $query);
         oci_bind_by_name($stid, ":arrivalDate", $date);
-		oci_bind_by_name($stid, ":endDate", $date);
+		oci_bind_by_name($stid, ":endDate", $enddate);
         oci_execute($stid);
 
         echo '<div class="section-title">' . $title . '</div>';
